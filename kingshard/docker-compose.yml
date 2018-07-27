@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  # MySQL
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+
+  proxy:
+    build: .
+    command: ["./start.sh"]
+    volumes:
+      - .:/data
+    ports:
+      - "9696:9696"
+      - "9797:9797"
+    links:
+      - db
+    depends_on:
+      - db
